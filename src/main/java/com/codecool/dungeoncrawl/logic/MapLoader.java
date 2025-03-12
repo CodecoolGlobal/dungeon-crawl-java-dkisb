@@ -29,7 +29,7 @@ public class MapLoader {
         int height = scanner.nextInt();
 
 
-        scanner.nextLine(); // empty line
+        scanner.nextLine();
 
 
         GameMap map = new GameMap(width, height, CellType.EMPTY);
@@ -91,10 +91,10 @@ public class MapLoader {
                 }
             }
         }
+        map.setSkeletons(skeletons);
         return map;
 
     }
-
     public List<Actor> getEntities() {
         return entities;
     }
