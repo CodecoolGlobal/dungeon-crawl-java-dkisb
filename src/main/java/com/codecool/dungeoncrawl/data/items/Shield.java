@@ -12,4 +12,9 @@ public class Shield extends Item {
     public String getTileName() {
         return "shield";
     }
+
+    @Override
+    public int setActionPoints() {
+        return 10;
+    }
 }

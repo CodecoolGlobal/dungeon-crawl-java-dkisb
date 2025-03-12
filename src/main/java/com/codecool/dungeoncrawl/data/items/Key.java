@@ -9,6 +9,11 @@ public class Key extends Item {
     }
 
     @Override
+    public int setActionPoints() {
+        return 0;
+    }
+
+    @Override
     public String getTileName() {
         return "key";
     }

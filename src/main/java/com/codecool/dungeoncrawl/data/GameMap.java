@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.data;
 import com.codecool.dungeoncrawl.data.actors.Ghost;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.actors.Skeleton;
+import com.codecool.dungeoncrawl.data.items.*;
 
 public class GameMap {
     private int width;
@@ -12,6 +13,10 @@ public class GameMap {
     private Player player;
     private Skeleton skeleton;
     private Ghost ghost;
+    private Key key;
+    private Potion potion;
+    private Sword sword;
+    private Shield shield;
 
     public GameMap(int width, int height, CellType defaultCellType) {
         this.width = width;
@@ -38,6 +43,18 @@ public class GameMap {
     public void setGhost(Ghost ghost) {
         this.ghost = ghost;
     }
+    public void setKey(Key key) {
+        this.key = key;
+    }
+    public void setPotion(Potion potion) {
+        this.potion = potion;
+    }
+    public void setSword(Sword sword) {
+        this.sword = sword;
+    }
+    public void setShield(Shield shield) {
+        this.shield = shield;
+    }
 
     public Player getPlayer() {
         return player;
@@ -45,7 +62,6 @@ public class GameMap {
     public Skeleton getSkeleton() {
         return skeleton;
     }
-    public Ghost getGhost() {return ghost;}
 
     public int getWidth() {
         return width;

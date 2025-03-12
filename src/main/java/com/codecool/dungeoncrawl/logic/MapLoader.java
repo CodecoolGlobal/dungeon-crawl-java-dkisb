@@ -7,6 +7,10 @@ import com.codecool.dungeoncrawl.data.actors.Actor;
 import com.codecool.dungeoncrawl.data.actors.Ghost;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.actors.Skeleton;
+import com.codecool.dungeoncrawl.data.items.Key;
+import com.codecool.dungeoncrawl.data.items.Potion;
+import com.codecool.dungeoncrawl.data.items.Shield;
+import com.codecool.dungeoncrawl.data.items.Sword;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -47,7 +51,7 @@ public class MapLoader {
                         case 'e':
                             cell.setType(CellType.FLOOR);
                             int result = random.nextInt(2);
-                            if(result == 0){
+                            if (result == 0) {
                                 Skeleton skeleton = new Skeleton(cell);
                                 map.setSkeleton(skeleton);
                                 entities.add(skeleton);
@@ -64,6 +68,22 @@ public class MapLoader {
                         case 'g':
                             cell.setType(CellType.FLOOR);
                             map.setGhost(new Ghost(cell));
+                            break;
+                        case 'k':
+                            cell.setType(CellType.FLOOR);
+                            map.setKey(new Key(cell));
+                            break;
+                        case 'y':
+                            cell.setType(CellType.FLOOR);
+                            map.setPotion(new Potion(cell));
+                            break;
+                        case 'x':
+                            cell.setType(CellType.FLOOR);
+                            map.setShield(new Shield(cell));
+                            break;
+                        case 's':
+                            cell.setType(CellType.FLOOR);
+                            map.setSword(new Sword(cell));
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

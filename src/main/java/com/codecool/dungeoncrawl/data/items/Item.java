@@ -9,8 +9,27 @@ public abstract class Item implements Drawable {
 
 
     public Item(Cell cell) {
-        this.cell = cell;
-        this.cell.setItem(this);
+        if (cell != null) {
+            this.cell = cell;
+            this.cell.setItem(this);
+        } else {
+            throw new IllegalArgumentException("Cell cannot be null when placing an item.");
+        }
+    }
+
+    public void placeItem(int dx, int dy) {
+        Cell targetCell = cell.getItem().getCell();
+        if (targetCell != null && "floor".equals(targetCell.getTileName())) {
+            this.cell.setItem(null);
+            this.cell = targetCell;
+            this.cell.setItem(this);
+        } else {
+            System.err.println("Cannot place item at (" + dx + ", " + dy + ") - Invalid cell.");
+        }
+
+        if (cell != null && cell.getTileName().equals("floor")) {
+            cell.setItem(this);
+        }
     }
 
     public Cell getCell() {
@@ -21,7 +40,5 @@ public abstract class Item implements Drawable {
         return actionPoints;
     }
 
-    public void setActionPoints(int actionPoints) {
-        this.actionPoints = actionPoints;
-    }
+    public abstract int setActionPoints();
 }

@@ -11,4 +11,9 @@ public class Potion extends Item {
     public String getTileName() {
         return "potion";
     }
+
+    @Override
+    public int setActionPoints() {
+        return 25;
+    }
 }
