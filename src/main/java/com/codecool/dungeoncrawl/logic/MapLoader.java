@@ -55,10 +55,13 @@ public class MapLoader {
                 }
             }
         }
+        map.setSkeletons(skeletons);
         return map;
 
     }
-    public List<Skeleton> getSkeletons() {
+    /*
+    public static List<Skeleton> getSkeletons() {
         return skeletons;
     }
+     */
 }
