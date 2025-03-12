@@ -7,16 +7,21 @@ import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.actors.Skeleton;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class MapLoader {
+    static List<Skeleton> skeletons = new ArrayList<>();
     public static GameMap loadMap() {
         InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
 
+
         scanner.nextLine(); // empty line
+
 
         GameMap map = new GameMap(width, height, CellType.EMPTY);
         for (int y = 0; y < height; y++) {
@@ -36,7 +41,9 @@ public class MapLoader {
                             break;
                         case 's':
                             cell.setType(CellType.FLOOR);
-                            new Skeleton(cell);
+                            Skeleton skeleton = new Skeleton(cell);
+                            map.setSkeleton(skeleton);
+                            skeletons.add(skeleton);
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
@@ -49,6 +56,9 @@ public class MapLoader {
             }
         }
         return map;
-    }
 
+    }
+    public List<Skeleton> getSkeletons() {
+        return skeletons;
+    }
 }
