@@ -91,7 +91,7 @@ public class MapLoader {
                 }
             }
         }
-        map.setSkeletons(skeletons);
+        map.setEntities(entities);
         return map;
 
     }
