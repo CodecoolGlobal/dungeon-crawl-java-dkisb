@@ -59,7 +59,9 @@ public class GameMap {
     public void setShield(Shield shield) {
         this.shield = shield;
     }
+    public void setSwordedPlayer(Player player) {
 
+    }
     public void setEntities(List<Actor> entities) {
         this.entities = entities;
     }
@@ -82,4 +84,6 @@ public class GameMap {
     public int getHeight() {
         return height;
     }
+
+
 }

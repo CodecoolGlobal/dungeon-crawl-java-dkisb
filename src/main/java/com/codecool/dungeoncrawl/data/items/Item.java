@@ -5,10 +5,12 @@ import com.codecool.dungeoncrawl.data.Drawable;
 
 public abstract class Item implements Drawable {
     private Cell cell;
+    private String name;
     private int actionPoints;
 
 
-    public Item(Cell cell) {
+    public Item(Cell cell, String name) {
+        this.name = name;
         if (cell != null) {
             this.cell = cell;
             this.cell.setItem(this);
@@ -17,23 +19,14 @@ public abstract class Item implements Drawable {
         }
     }
 
-    public void placeItem(int dx, int dy) {
-        Cell targetCell = cell.getItem().getCell();
-        if (targetCell != null && "floor".equals(targetCell.getTileName())) {
-            this.cell.setItem(null);
-            this.cell = targetCell;
-            this.cell.setItem(this);
-        } else {
-            System.err.println("Cannot place item at (" + dx + ", " + dy + ") - Invalid cell.");
-        }
 
-        if (cell != null && cell.getTileName().equals("floor")) {
-            cell.setItem(this);
-        }
-    }
 
     public Cell getCell() {
         return cell;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getActionPoints() {
@@ -41,4 +34,11 @@ public abstract class Item implements Drawable {
     }
 
     public abstract int setActionPoints();
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(name).append("\n");
+        return sb.toString();
+    }
 }
