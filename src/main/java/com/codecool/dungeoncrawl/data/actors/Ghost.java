@@ -1,12 +1,13 @@
 package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
-import com.codecool.dungeoncrawl.data.GameMap;
 
-public class Ghost extends Actor {
+public class Ghost extends Enemy {
     Cell cell;
-    public Ghost(Cell cell, GameMap gameMap) {
-        super(cell,10 ,gameMap);
+    private static  int BASE_HEALTH = 10;
+
+    public Ghost(Cell cell) {
+        super(cell, BASE_HEALTH);
         this.cell = cell;
     }
 

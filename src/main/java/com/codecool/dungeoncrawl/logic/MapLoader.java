@@ -52,34 +52,32 @@ public class MapLoader {
                             int result = random.nextInt(2);
                             if (result == 0) {
                                 Skeleton skeleton = new Skeleton(cell);
-                                map.setEntity(skeleton);
                                 map.addEntities(skeleton);
                             } else {
                                 Ghost ghost = new Ghost(cell);
-                                map.setEntity(ghost);
                                 map.addEntities(ghost);
                             }
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
-                            map.setPlayer(new Player(cell, map));
+                            map.setPlayer(new Player(cell));
                             break;
                       
                         case 'k':
                             cell.setType(CellType.FLOOR);
-                            map.setItem(new Key(cell));
+                            map.addItem(new Key(cell));
                             break;
                         case 'y':
                             cell.setType(CellType.FLOOR);
-                            map.setItem(new Potion(cell));
+                            map.addItem(new Potion(cell));
                             break;
                         case 'x':
                             cell.setType(CellType.FLOOR);
-                            map.setItem(new Shield(cell));
+                            map.addItem(new Shield(cell));
                             break;
                         case 's':
                             cell.setType(CellType.FLOOR);
-                            map.setItem(new Sword(cell));
+                            map.addItem(new Sword(cell));
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

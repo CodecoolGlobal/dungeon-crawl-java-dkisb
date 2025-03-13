@@ -8,16 +8,14 @@ import com.codecool.dungeoncrawl.data.items.Item;
 import java.util.List;
 
 public abstract class Actor implements Drawable {
-    private Cell cell;
+    protected Cell cell;
     private Player player;
-    private GameMap gameMap;
     private int health;
 
-    public Actor(Cell cell, int health, GameMap gameMap) {
+    public Actor(Cell cell, int health) {
         this.cell = cell;
         this.health = health;
         this.cell.setActor(this);
-        this.gameMap = gameMap;
     }
 
     public void move(int dx, int dy) {
@@ -25,23 +23,6 @@ public abstract class Actor implements Drawable {
         cell.setActor(null);
         nextCell.setActor(this);
         cell = nextCell;
-            /*
-            int x;
-            int y;
-
-            if (cell.getActor() instanceof Player) {
-                x = cell.getX();
-                y = cell.getY();
-                Actor actorToRemove = null;
-                for (Actor actor : gameMap.getEntities()) {
-                    if (actor.getX() == x && actor.getY() == y) {
-                        actorToRemove = actor;
-                    }
-                }
-                gameMap.getEntities().remove(actorToRemove);
-            }
-             */
-
     }
 
     public int getHealth() {
