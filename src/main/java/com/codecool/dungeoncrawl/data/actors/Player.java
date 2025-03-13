@@ -70,7 +70,10 @@ public class Player extends Actor {
     @Override
     public void move(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
-        if (!cell.getNeighbor(dx, dy).getTileName().equals("wall")) {
+        if (nextCell.getActor() instanceof Enemy) {
+            return;
+        }
+        if (!cell.getNeighbor(dx, dy).getTileName().equals("wall")&& nextCell.getActor() == null) {
             cell.setActor(null);
             nextCell.setActor(this);
             cell = nextCell;

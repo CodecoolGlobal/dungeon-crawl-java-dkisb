@@ -36,6 +36,13 @@ public class GameMap {
     public List<Enemy> getEntities() {
         return entities;
     }
+    public void updateEnemies() {
+        List<Enemy> enemiesCopy = new ArrayList<>(entities);
+        for (Enemy enemy : enemiesCopy) {
+            enemy.update(this);
+        }
+    }
+
     public int getWidth() {
         return width;
     }
