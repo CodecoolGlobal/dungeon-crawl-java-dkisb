@@ -6,7 +6,6 @@ import com.codecool.dungeoncrawl.data.Drawable;
 public abstract class Item implements Drawable {
     private Cell cell;
     private String name;
-    private int actionPoints;
 
 
     public Item(Cell cell, String name) {
@@ -19,8 +18,6 @@ public abstract class Item implements Drawable {
         }
     }
 
-
-
     public Cell getCell() {
         return cell;
     }
@@ -29,16 +26,8 @@ public abstract class Item implements Drawable {
         return name;
     }
 
-    public int getActionPoints() {
-        return actionPoints;
-    }
-
-    public abstract int setActionPoints();
-
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(name).append("\n");
-        return sb.toString();
+        return getName();
     }
 }
