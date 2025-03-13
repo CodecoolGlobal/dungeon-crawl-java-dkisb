@@ -6,7 +6,7 @@ import com.codecool.dungeoncrawl.data.GameMap;
 public class Ghost extends Actor {
     Cell cell;
     public Ghost(Cell cell, GameMap gameMap) {
-        super(cell, gameMap);
+        super(cell,10 ,gameMap);
         this.cell = cell;
     }
 

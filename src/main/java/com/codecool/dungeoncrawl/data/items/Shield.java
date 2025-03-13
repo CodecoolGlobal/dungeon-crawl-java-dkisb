@@ -13,8 +13,4 @@ public class Shield extends Item {
         return "shield";
     }
 
-    @Override
-    public int setActionPoints() {
-        return 10;
-    }
 }

@@ -11,10 +11,11 @@ public abstract class Actor implements Drawable {
     private Cell cell;
     private Player player;
     private GameMap gameMap;
-    private int health = 100;
+    private int health;
 
-    public Actor(Cell cell, GameMap gameMap) {
+    public Actor(Cell cell, int health, GameMap gameMap) {
         this.cell = cell;
+        this.health = health;
         this.cell.setActor(this);
         this.gameMap = gameMap;
     }
@@ -45,6 +46,9 @@ public abstract class Actor implements Drawable {
 
     public int getHealth() {
         return health;
+    }
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     public Cell getCell() {

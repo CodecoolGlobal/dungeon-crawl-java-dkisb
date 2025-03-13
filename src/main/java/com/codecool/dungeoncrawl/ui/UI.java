@@ -50,8 +50,7 @@ public class UI {
 
             keyHandler.perform(keyEvent, logic.getMap());
         }
-
-        logic.checkItemPickup();
+        logic.getMap().getPlayer().checkItemPickup();
         refresh();
     }
 
@@ -71,7 +70,7 @@ public class UI {
             }
         }
         mainStage.setHealthLabelText(logic.getPlayerHealth());
-        if (logic.getPlayerInventory() != null) {
+        if (!logic.getPlayerInventory().isEmpty()) {
             String inventoryText = logic.getPlayerInventory().stream()
                     .map(Item::getName)
                     .collect(Collectors.joining("\n"));

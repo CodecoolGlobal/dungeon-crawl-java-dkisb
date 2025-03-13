@@ -19,7 +19,6 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class MapLoader {
-    static List<Actor> entities = new ArrayList<>();
 
     public static GameMap loadMap() {
         InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
@@ -52,38 +51,35 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             int result = random.nextInt(2);
                             if (result == 0) {
-                                Skeleton skeleton = new Skeleton(cell, map);
-                                map.setSkeleton(skeleton);
-                                entities.add(skeleton);
+                                Skeleton skeleton = new Skeleton(cell);
+                                map.setEntity(skeleton);
+                                map.addEntities(skeleton);
                             } else {
-                                Ghost ghost = new Ghost(cell, map);
-                                map.setGhost(ghost);
-                                entities.add(ghost);
+                                Ghost ghost = new Ghost(cell);
+                                map.setEntity(ghost);
+                                map.addEntities(ghost);
                             }
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
                             map.setPlayer(new Player(cell, map));
                             break;
-                        case 'g':
-                            cell.setType(CellType.FLOOR);
-                            map.setGhost(new Ghost(cell, map));
-                            break;
+                      
                         case 'k':
                             cell.setType(CellType.FLOOR);
-                            map.setKey(new Key(cell));
+                            map.setItem(new Key(cell));
                             break;
                         case 'y':
                             cell.setType(CellType.FLOOR);
-                            map.setPotion(new Potion(cell));
+                            map.setItem(new Potion(cell));
                             break;
                         case 'x':
                             cell.setType(CellType.FLOOR);
-                            map.setShield(new Shield(cell));
+                            map.setItem(new Shield(cell));
                             break;
                         case 's':
                             cell.setType(CellType.FLOOR);
-                            map.setSword(new Sword(cell));
+                            map.setItem(new Sword(cell));
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
@@ -91,7 +87,6 @@ public class MapLoader {
                 }
             }
         }
-        map.setEntities(entities);
         return map;
 
     }

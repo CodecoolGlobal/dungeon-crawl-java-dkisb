@@ -3,12 +3,13 @@ package com.codecool.dungeoncrawl.data.actors;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.GameMap;
 
+
 public class Skeleton extends Actor {
     private Cell cell;
     public Skeleton(Cell cell, GameMap gameMap) {
-        super(cell, gameMap);
+        super(cell,15 ,gameMap);
         this.cell = cell;
-    }
+}
 
     @Override
     public String getTileName() {
