@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class Actor implements Drawable {
     private Cell cell;
-    private int health = 100;
+    private int health = 30;
 
     public Actor(Cell cell) {
         this.cell = cell;
@@ -26,6 +26,9 @@ public abstract class Actor implements Drawable {
 
     public int getHealth() {
         return health;
+    }
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     public Cell getCell() {

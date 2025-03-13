@@ -14,8 +14,4 @@ public class Sword extends Item {
         return "sword";
     }
 
-    @Override
-    public int getActionPoints() {
-        return 10;
-    }
 }

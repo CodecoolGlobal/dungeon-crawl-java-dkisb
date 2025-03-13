@@ -35,14 +35,6 @@ public class GameLogic {
         return map.getPlayer().getInventory();
     }
 
-    public void checkItemPickup(){
-        Cell playerCell = map.getPlayer().getCell();
-        if(playerCell != null && playerCell.getItem() != null){
-            map.getPlayer().setInventoryContent(playerCell.getItem());
-            playerCell.setItem(null);
-        }
-    }
-
     public GameMap getMap() {
         return map;
     }
