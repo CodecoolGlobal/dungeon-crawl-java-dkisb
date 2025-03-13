@@ -3,14 +3,15 @@ package com.codecool.dungeoncrawl.data.actors;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.Drawable;
 import com.codecool.dungeoncrawl.data.GameMap;
+import com.codecool.dungeoncrawl.data.items.Item;
 
 import java.util.List;
 
 public abstract class Actor implements Drawable {
     private Cell cell;
-    private int health = 10;
     private Player player;
     private GameMap gameMap;
+    private int health = 100;
 
     public Actor(Cell cell, GameMap gameMap) {
         this.cell = cell;

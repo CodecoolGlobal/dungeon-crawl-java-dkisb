@@ -1,15 +1,27 @@
 package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
-import com.codecool.dungeoncrawl.data.GameMap;
+import com.codecool.dungeoncrawl.data.items.Item;
+import com.codecool.dungeoncrawl.data.items.Shield;
+import com.codecool.dungeoncrawl.data.items.Sword;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player extends Actor {
-    Cell cell;
-    public Player(Cell cell, GameMap gameMap) {
-        super(cell, gameMap);
+    private List<Item> inventory = new ArrayList<>();
+    public Player(Cell cell) {
+        super(cell);
     }
 
     public String getTileName() {
+        boolean hasSword = getInventory().stream().anyMatch(item -> item instanceof Sword);
+        boolean hasShield = getInventory().stream().anyMatch(item -> item instanceof Shield);
+        if (hasSword && hasShield) {
+            return "shieldedPlayer";
+        } else if (hasSword) {
+            return "swordedPlayer";
+        }
         return "player";
     }
 
@@ -19,5 +31,12 @@ public class Player extends Actor {
 
     public int getY() {
         return cell.getY();
+      
+    public List<Item> getInventory() {
+        return inventory;
+    }
+
+    public void setInventoryContent(Item item) {
+        inventory.add(item);
     }
 }

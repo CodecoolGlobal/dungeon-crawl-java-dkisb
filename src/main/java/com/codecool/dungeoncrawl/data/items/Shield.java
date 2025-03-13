@@ -5,7 +5,7 @@ import com.codecool.dungeoncrawl.data.Cell;
 public class Shield extends Item {
 
     public Shield(Cell cell) {
-        super(cell);
+        super(cell, "shield");
     }
 
     @Override

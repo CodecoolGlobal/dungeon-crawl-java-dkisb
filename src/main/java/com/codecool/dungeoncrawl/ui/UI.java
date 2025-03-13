@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.ui;
 
 import com.codecool.dungeoncrawl.data.Cell;
+import com.codecool.dungeoncrawl.data.items.Item;
 import com.codecool.dungeoncrawl.logic.GameLogic;
 import com.codecool.dungeoncrawl.ui.elements.MainStage;
 import com.codecool.dungeoncrawl.ui.keyeventhandler.KeyHandler;
@@ -12,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UI {
     private Canvas canvas;
@@ -44,6 +46,7 @@ public class UI {
         for (KeyHandler keyHandler : keyHandlers) {
             keyHandler.perform(keyEvent, logic.getMap());
         }
+        logic.checkItemPickup();
         refresh();
     }
 
@@ -63,5 +66,13 @@ public class UI {
             }
         }
         mainStage.setHealthLabelText(logic.getPlayerHealth());
+        if (logic.getPlayerInventory() != null) {
+            String inventoryText = logic.getPlayerInventory().stream()
+                    .map(Item::getName)
+                    .collect(Collectors.joining("\n"));
+            mainStage.setInventoryContentText(inventoryText.isEmpty() ? "Inventory is empty." : inventoryText);
+        } else {
+            mainStage.setInventoryContentText("Inventory is empty.");
+        }
     }
 }
