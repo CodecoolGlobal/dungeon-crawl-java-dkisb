@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.data.items.Item;
 import com.codecool.dungeoncrawl.logic.GameLogic;
 import com.codecool.dungeoncrawl.ui.elements.MainStage;
 import com.codecool.dungeoncrawl.ui.keyeventhandler.KeyHandler;
+import com.codecool.dungeoncrawl.ui.keyeventhandler.SkeletonMove;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -22,6 +23,7 @@ public class UI {
     private MainStage mainStage;
     private GameLogic logic;
     private Set<KeyHandler> keyHandlers;
+    private SkeletonMove skeletonMove = new SkeletonMove();
 
 
     public UI(GameLogic logic, Set<KeyHandler> keyHandlers) {
@@ -43,7 +45,9 @@ public class UI {
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
+        skeletonMove.execute(logic.getMap());
         for (KeyHandler keyHandler : keyHandlers) {
+
             keyHandler.perform(keyEvent, logic.getMap());
         }
         logic.getMap().getPlayer().checkItemPickup();

@@ -18,7 +18,7 @@ public class Game extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        this.keyHandlers = Set.of(new Up(), new Down(), new Left(), new Right(), new SkeletonMove());
+        this.keyHandlers = Set.of(new Up(), new Down(), new Left(), new Right());
         this.logic = new GameLogic();
         this.ui = new UI(logic, keyHandlers);
         ui.setUpPain(primaryStage);
