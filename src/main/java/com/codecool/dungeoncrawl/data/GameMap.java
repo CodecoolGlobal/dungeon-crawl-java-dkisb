@@ -37,7 +37,7 @@ public class GameMap {
         return entities;
     }
     public void updateEnemies() {
-        List<Enemy> enemiesCopy = new ArrayList<>(entities); // Copy to avoid ConcurrentModificationException
+        List<Enemy> enemiesCopy = new ArrayList<>(entities);
         for (Enemy enemy : enemiesCopy) {
             enemy.update(this);
         }
