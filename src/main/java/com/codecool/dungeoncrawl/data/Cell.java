@@ -49,6 +49,10 @@ public class Cell implements Drawable {
         return type.getTileName();
     }
 
+    public GameMap getGameMap() {
+        return gameMap;
+    }
+
     public int getX() {
         return x;
     }

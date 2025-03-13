@@ -52,22 +52,22 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             int result = random.nextInt(2);
                             if (result == 0) {
-                                Skeleton skeleton = new Skeleton(cell);
+                                Skeleton skeleton = new Skeleton(cell, map);
                                 map.setSkeleton(skeleton);
                                 entities.add(skeleton);
                             } else {
-                                Ghost ghost = new Ghost(cell);
+                                Ghost ghost = new Ghost(cell, map);
                                 map.setGhost(ghost);
                                 entities.add(ghost);
                             }
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
-                            map.setPlayer(new Player(cell));
+                            map.setPlayer(new Player(cell, map));
                             break;
                         case 'g':
                             cell.setType(CellType.FLOOR);
-                            map.setGhost(new Ghost(cell));
+                            map.setGhost(new Ghost(cell, map));
                             break;
                         case 'k':
                             cell.setType(CellType.FLOOR);
@@ -94,8 +94,5 @@ public class MapLoader {
         map.setEntities(entities);
         return map;
 
-    }
-    public List<Actor> getEntities() {
-        return entities;
     }
 }
