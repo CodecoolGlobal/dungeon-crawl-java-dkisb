@@ -1,9 +1,6 @@
 package com.codecool.dungeoncrawl.data;
 
-import com.codecool.dungeoncrawl.data.actors.Actor;
-import com.codecool.dungeoncrawl.data.actors.Ghost;
-import com.codecool.dungeoncrawl.data.actors.Player;
-import com.codecool.dungeoncrawl.data.actors.Skeleton;
+import com.codecool.dungeoncrawl.data.actors.*;
 import com.codecool.dungeoncrawl.data.items.*;
 
 import java.util.ArrayList;
@@ -15,14 +12,15 @@ public class GameMap {
     private Cell[][] cells;
 
     private Player player;
-    private Actor actor;
-    private Item item;
-    private List<Actor> entities;
+
+    private List<Enemy> entities;
+    private List<Item> items;
 
     public GameMap(int width, int height, CellType defaultCellType) {
         this.width = width;
         this.height = height;
         this.entities = new ArrayList<>();
+        this.items = new ArrayList<>();
         cells = new Cell[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -35,7 +33,7 @@ public class GameMap {
     public Player getPlayer() {
         return player;
     }
-    public List<Actor> getEntities() {
+    public List<Enemy> getEntities() {
         return entities;
     }
     public int getWidth() {
@@ -51,14 +49,12 @@ public class GameMap {
     public void setPlayer(Player player) {
         this.player = player;
     }
-    public void setEntity(Actor actor) {
-        this.actor = actor;
+
+    public void addItem(Item item) {
+        items.add(item);
     }
-    public void setItem(Item item) {
-        this.item = item;
-    }
-    public void addEntities(Actor actor) {
-        entities.add(actor);
+    public void addEntities(Enemy enemy) {
+        entities.add(enemy);
     }
 
 

@@ -50,7 +50,6 @@ public class UI {
 
             keyHandler.perform(keyEvent, logic.getMap());
         }
-        logic.getMap().getPlayer().checkItemPickup();
         refresh();
     }
 

@@ -1,15 +1,16 @@
 package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
-import com.codecool.dungeoncrawl.data.GameMap;
 
 
-public class Skeleton extends Actor {
+public class Skeleton extends Enemy {
     private Cell cell;
-    public Skeleton(Cell cell, GameMap gameMap) {
-        super(cell,15 ,gameMap);
+    private static int BASE_HEALTH = 15;
+
+    public Skeleton(Cell cell) {
+        super(cell, BASE_HEALTH);
         this.cell = cell;
-}
+    }
 
     @Override
     public String getTileName() {
