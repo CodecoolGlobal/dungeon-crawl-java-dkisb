@@ -6,6 +6,7 @@ import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.actors.Skeleton;
 import com.codecool.dungeoncrawl.data.items.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameMap {
@@ -14,17 +15,14 @@ public class GameMap {
     private Cell[][] cells;
 
     private Player player;
-    private Skeleton skeleton;
-    private Ghost ghost;
-    private Key key;
-    private Potion potion;
-    private Sword sword;
-    private Shield shield;
+    private Actor actor;
+    private Item item;
     private List<Actor> entities;
 
     public GameMap(int width, int height, CellType defaultCellType) {
         this.width = width;
         this.height = height;
+        this.entities = new ArrayList<>();
         cells = new Cell[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -33,6 +31,19 @@ public class GameMap {
         }
     }
 
+
+    public Player getPlayer() {
+        return player;
+    }
+    public List<Actor> getEntities() {
+        return entities;
+    }
+    public int getWidth() {
+        return width;
+    }
+    public int getHeight() {
+        return height;
+    }
     public Cell getCell(int x, int y) {
         return cells[x][y];
     }
@@ -40,50 +51,17 @@ public class GameMap {
     public void setPlayer(Player player) {
         this.player = player;
     }
-
-    public void setSkeleton(Skeleton skeleton) {
-        this.skeleton = skeleton;
+    public void setEntity(Actor actor) {
+        this.actor = actor;
     }
-    public void setGhost(Ghost ghost) {
-        this.ghost = ghost;
+    public void setItem(Item item) {
+        this.item = item;
     }
-    public void setKey(Key key) {
-        this.key = key;
-    }
-    public void setPotion(Potion potion) {
-        this.potion = potion;
-    }
-    public void setSword(Sword sword) {
-        this.sword = sword;
-    }
-    public void setShield(Shield shield) {
-        this.shield = shield;
-    }
-    public void setSwordedPlayer(Player player) {
-
-    }
-    public void setEntities(List<Actor> entities) {
-        this.entities = entities;
+    public void addEntities(Actor actor) {
+        entities.add(actor);
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-    public Skeleton getSkeleton() {
-        return skeleton;
-    }
 
-    public List<Actor> getEntities() {
-        return entities;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
 
 
 }

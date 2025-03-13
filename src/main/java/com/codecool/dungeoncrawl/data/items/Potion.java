@@ -13,7 +13,7 @@ public class Potion extends Item {
     }
 
     @Override
-    public int setActionPoints() {
+    public int getActionPoints() {
         return 25;
     }
 }

@@ -31,4 +31,11 @@ public class Player extends Actor {
     public void setInventoryContent(Item item) {
         inventory.add(item);
     }
+
+    public void checkItemPickup(){
+        if (this.getCell().getItem() != null) {
+            this.setInventoryContent(this.getCell().getItem());
+            this.getCell().setItem(null);
+        }
+    }
 }

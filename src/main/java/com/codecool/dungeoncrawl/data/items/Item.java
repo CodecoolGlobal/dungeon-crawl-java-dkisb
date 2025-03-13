@@ -19,8 +19,6 @@ public abstract class Item implements Drawable {
         }
     }
 
-
-
     public Cell getCell() {
         return cell;
     }
@@ -33,12 +31,8 @@ public abstract class Item implements Drawable {
         return actionPoints;
     }
 
-    public abstract int setActionPoints();
-
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(name).append("\n");
-        return sb.toString();
+        return getName();
     }
 }

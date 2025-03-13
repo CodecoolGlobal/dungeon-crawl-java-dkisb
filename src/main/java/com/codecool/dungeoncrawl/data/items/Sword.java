@@ -15,7 +15,7 @@ public class Sword extends Item {
     }
 
     @Override
-    public int setActionPoints(){
+    public int getActionPoints() {
         return 10;
     }
 }

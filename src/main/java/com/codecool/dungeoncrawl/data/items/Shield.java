@@ -14,7 +14,7 @@ public class Shield extends Item {
     }
 
     @Override
-    public int setActionPoints() {
+    public int getActionPoints() {
         return 10;
     }
 }
