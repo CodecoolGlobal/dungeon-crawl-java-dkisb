@@ -17,7 +17,7 @@ public class Player extends Actor {
     private boolean potionBonusApplied = false;
 
     public Player(Cell cell) {
-        super(cell);
+        super(cell, 20);
     }
 
     public String getTileName() {
