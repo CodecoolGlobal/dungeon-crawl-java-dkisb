@@ -55,7 +55,7 @@ public class Enemy extends Actor {
         if (newX >= 0 && newX < gameMap.getWidth() && newY >= 0 && newY < gameMap.getHeight()) {
             Cell targetCell = gameMap.getCell(newX, newY);
 
-            if (!targetCell.getTileName().equals("wall")) {
+            if (!targetCell.getTileName().equals("wall") && targetCell.getActor() == null) {
                 cell.setActor(null);
                 targetCell.setActor(this);
                 cell = targetCell;
