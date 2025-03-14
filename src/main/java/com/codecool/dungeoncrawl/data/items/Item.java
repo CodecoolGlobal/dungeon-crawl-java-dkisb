@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.data.items;
 
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.Drawable;
+import com.codecool.dungeoncrawl.data.actors.Player;
 
 public abstract class Item implements Drawable {
     private Cell cell;
@@ -29,4 +30,6 @@ public abstract class Item implements Drawable {
     public String toString() {
         return name;
     }
+
+    public  abstract void applyEffect(Player player);
 }

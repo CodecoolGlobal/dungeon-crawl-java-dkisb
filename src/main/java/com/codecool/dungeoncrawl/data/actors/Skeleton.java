@@ -2,14 +2,14 @@ package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
 
+import java.util.Random;
+
 
 public class Skeleton extends Enemy {
-    //private Cell cell;
     private static final int BASE_HEALTH = 15;
 
-    public Skeleton(Cell cell) {
-        super(cell, BASE_HEALTH);
-        this.cell = cell;
+    public Skeleton(Cell cell, Random random) {
+        super(cell, BASE_HEALTH, random);
     }
 
     @Override

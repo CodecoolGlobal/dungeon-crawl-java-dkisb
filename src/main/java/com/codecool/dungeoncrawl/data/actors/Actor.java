@@ -9,7 +9,6 @@ import java.util.List;
 
 public abstract class Actor implements Drawable {
     protected Cell cell;
-    //private Player player;
     private int health;
 
     public Actor(Cell cell, int health) {

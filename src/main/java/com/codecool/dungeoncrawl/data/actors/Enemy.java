@@ -6,7 +6,6 @@ import com.codecool.dungeoncrawl.data.GameMap;
 import java.util.Random;
 
 public class Enemy extends Actor {
-    //private GameMap gameMap;
     private Random random;
 
     public Enemy(Cell cell, int baseHealth, Random random) {
@@ -19,55 +18,44 @@ public class Enemy extends Actor {
         return "enemy";
     }
 
-    private boolean checkForPlayer(GameMap gameMap) { //you can get neighbour cells form current cell, you dont need a game map
-        int x = cell.getX();
-        int y = cell.getY();
-
-        return isPlayerAt(gameMap, x + 1, y) ||
-                isPlayerAt(gameMap, x - 1, y) ||
-                isPlayerAt(gameMap, x, y + 1) ||
-                isPlayerAt(gameMap, x, y - 1);
+    private boolean checkForPlayer() {
+        return  isPlayerAt(cell.getNeighbor(1, 0)) ||
+                isPlayerAt(cell.getNeighbor(-1,0)) ||
+                isPlayerAt(cell.getNeighbor(0,1)) ||
+                isPlayerAt(cell.getNeighbor(0, -1));
     }
 
-    private boolean isPlayerAt(GameMap gameMap, int x, int y) {
-        if (x >= 0 && x < gameMap.getWidth() && y >= 0 && y < gameMap.getHeight()) {
-            Cell targetCell = gameMap.getCell(x, y);
-            return targetCell.getActor() instanceof Player;
-        }
-        return false;
+    private boolean isPlayerAt( Cell neighbor) {
+        return neighbor != null && neighbor.getActor() instanceof Player;
     }
 
     public void update(GameMap gameMap) {
-        if (checkForPlayer(gameMap)) {
+        if (checkForPlayer()) {
             gameMap.getEntities().remove(this);
             cell.setActor(null);
         } else {
-            moveRandomly(gameMap);
+            moveRandomly();
         }
     }
 
-    private void moveRandomly(GameMap gameMap) {
+    private void moveRandomly() {
         int index = random.nextInt(4);
         switch (index) {
-            case 0 -> tryMove(gameMap, 1, 0);
-            case 1 -> tryMove(gameMap, -1, 0);
-            case 2 -> tryMove(gameMap, 0, -1);
-            case 3 -> tryMove(gameMap, 0, 1);
+            case 0 -> move(1, 0);
+            case 1 -> move( -1, 0);
+            case 2 -> move( 0, -1);
+            case 3 -> move( 0, 1);
         }
     }
 
-    private void tryMove(GameMap gameMap, int dx, int dy) {
-        int newX = cell.getX() + dx;
-        int newY = cell.getY() + dy;
+    @Override
+    public void move(int dx, int dy) {
+        Cell nextCell = cell.getNeighbor(dx, dy);
 
-        if (newX >= 0 && newX < gameMap.getWidth() && newY >= 0 && newY < gameMap.getHeight()) {
-            Cell targetCell = gameMap.getCell(newX, newY);
-
-            if (!targetCell.getTileName().equals("wall")) {
-                cell.setActor(null);
-                targetCell.setActor(this);
-                cell = targetCell;
-            }
+        if (!nextCell.getTileName().equals("wall") && nextCell.getActor() == null) {
+            cell.setActor(null);
+            nextCell.setActor(this);
+            cell = nextCell;
         }
     }
 }

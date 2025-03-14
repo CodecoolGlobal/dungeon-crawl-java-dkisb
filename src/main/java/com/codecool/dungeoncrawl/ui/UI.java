@@ -43,9 +43,9 @@ public class UI {
 
     private void onKeyPressed(KeyEvent keyEvent) {
         for (KeyHandler keyHandler : keyHandlers) {
-            keyHandler.perform(keyEvent, logic.getMap()); //logic.getPlayer() instead
+            keyHandler.perform(keyEvent, logic.getPlayer()); //logic.getPlayer() instead
         }
-        logic.getMap().updateEnemies(); // logic.moveEnemies() instead
+        logic.moveEnemies(); // logic.moveEnemies() instead
         refresh();
     }
 
