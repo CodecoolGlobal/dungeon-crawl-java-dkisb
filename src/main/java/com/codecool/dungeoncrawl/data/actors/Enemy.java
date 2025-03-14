@@ -6,11 +6,12 @@ import com.codecool.dungeoncrawl.data.GameMap;
 import java.util.Random;
 
 public class Enemy extends Actor {
-    private GameMap gameMap;
-    private Random random = new Random();
+    //private GameMap gameMap;
+    private Random random;
 
-    public Enemy(Cell cell, int baseHealth) {
+    public Enemy(Cell cell, int baseHealth, Random random) {
         super(cell, baseHealth);
+        this.random = random;
     }
 
     @Override
@@ -18,7 +19,7 @@ public class Enemy extends Actor {
         return "enemy";
     }
 
-    private boolean checkForPlayer(GameMap gameMap) {
+    private boolean checkForPlayer(GameMap gameMap) { //you can get neighbour cells form current cell, you dont need a game map
         int x = cell.getX();
         int y = cell.getY();
 

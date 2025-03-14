@@ -14,13 +14,14 @@ public class GameMap {
     private Player player;
 
     private List<Enemy> entities;
-    private List<Item> items;
+
+    //private List<Item> items;
 
     public GameMap(int width, int height, CellType defaultCellType) {
         this.width = width;
         this.height = height;
         this.entities = new ArrayList<>();
-        this.items = new ArrayList<>();
+        //this.items = new ArrayList<>();
         cells = new Cell[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -36,7 +37,7 @@ public class GameMap {
     public List<Enemy> getEntities() {
         return entities;
     }
-    public void updateEnemies() {
+    public void updateEnemies() { // TODO: Instead of this, method that moves alive enemies and deletes dead ones
         List<Enemy> enemiesCopy = new ArrayList<>(entities);
         for (Enemy enemy : enemiesCopy) {
             enemy.update(this);
@@ -49,7 +50,7 @@ public class GameMap {
     public int getHeight() {
         return height;
     }
-    public Cell getCell(int x, int y) {
+    public Cell getCell(int x, int y) { //TDOD: if x or y is outside of map return null
         return cells[x][y];
     }
 
@@ -57,14 +58,10 @@ public class GameMap {
         this.player = player;
     }
 
-    public void addItem(Item item) {
+    /*public void addItem(Item item) {
         items.add(item);
-    }
+    }*/
     public void addEntities(Enemy enemy) {
         entities.add(enemy);
     }
-
-
-
-
 }

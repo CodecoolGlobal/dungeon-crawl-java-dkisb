@@ -7,7 +7,6 @@ public abstract class Item implements Drawable {
     private Cell cell;
     private String name;
 
-
     public Item(Cell cell, String name) {
         this.name = name;
         if (cell != null) {
@@ -28,6 +27,6 @@ public abstract class Item implements Drawable {
 
     @Override
     public String toString() {
-        return getName();
+        return name;
     }
 }

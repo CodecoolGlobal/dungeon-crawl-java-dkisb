@@ -3,8 +3,8 @@ package com.codecool.dungeoncrawl.data.actors;
 import com.codecool.dungeoncrawl.data.Cell;
 
 public class Ghost extends Enemy {
-    Cell cell;
-    private static  int BASE_HEALTH = 10;
+    //Cell cell;
+    private static final int BASE_HEALTH = 10;
 
     public Ghost(Cell cell) {
         super(cell, BASE_HEALTH);
@@ -17,7 +17,7 @@ public class Ghost extends Enemy {
     }
 
     @Override
-    public void move(int dx, int dy) {
+    public void move(int dx, int dy) { //remove magic numbers
         if (cell.getX() == 0 && dx == -1) {
             dx = 0;
         }

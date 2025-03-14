@@ -4,8 +4,8 @@ import com.codecool.dungeoncrawl.data.Cell;
 
 
 public class Skeleton extends Enemy {
-    private Cell cell;
-    private static int BASE_HEALTH = 15;
+    //private Cell cell;
+    private static final int BASE_HEALTH = 15;
 
     public Skeleton(Cell cell) {
         super(cell, BASE_HEALTH);

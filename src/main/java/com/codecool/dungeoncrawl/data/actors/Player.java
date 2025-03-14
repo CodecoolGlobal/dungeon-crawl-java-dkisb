@@ -10,12 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends Actor {
-    Cell activeCell;
+    //Cell activeCell;
     private List<Item> inventory = new ArrayList<>();
+    private String name = "player"; //TODO: getter and setter
+    //not needed
     private boolean swordBonusApplied = false;
     private boolean shieldBonusApplied = false;
     private boolean potionBonusApplied = false;
-    private static int BASE_HEALTH = 20;
+    //-----------
+    private static final int BASE_HEALTH = 20;
 
 
     public Player(Cell cell) {
@@ -24,7 +27,7 @@ public class Player extends Actor {
     }
 
     public String getTileName() {
-        boolean hasSword = hasItem(Sword.class);
+        /*boolean hasSword = hasItem(Sword.class);
         boolean hasShield = hasItem(Shield.class);
         boolean hasPotion = hasItem(Potion.class);
 
@@ -35,26 +38,30 @@ public class Player extends Actor {
         } else if (hasSword) {
             return "swordedPlayer";
         }
-        return "player";
+        return "player";*/
+        return name;
     }
     public List<Item> getInventory() {
         return inventory;
     }
-    public void setInventoryContent(Item item) {
+   /* public void setInventoryContent(Item item) {
         inventory.add(item);
-    }
+    }*/
 
     public void checkItemPickup(){
-        if (this.getCell().getItem() != null) {
-            this.setInventoryContent(this.getCell().getItem());
-            this.getCell().setItem(null);
+        Item item = cell.getItem();
+        if (item != null) {
+            inventory.add(item);
+            item.applyEffect(this); //TODO: Implement this abstract method
+            cell.setItem(null);
         }
     }
-    private boolean hasItem(Class<? extends Item> itemType) {
-        return inventory.stream().anyMatch(itemType::isInstance);
-    }
 
-    private void applyHealthBonus(boolean hasSword, boolean hasShield, boolean hasPotion) {
+    /*private boolean hasItem(Class<? extends Item> itemType) {
+        return inventory.stream().anyMatch(itemType::isInstance);
+    }*/
+
+   /* private void applyHealthBonus(boolean hasSword, boolean hasShield, boolean hasPotion) {
         if (hasSword && hasShield && !shieldBonusApplied) {
             shieldBonusApplied = true;
             setHealth(BASE_HEALTH += 10);
@@ -65,7 +72,7 @@ public class Player extends Actor {
             potionBonusApplied = true;
             setHealth(BASE_HEALTH += 15);
         }
-    }
+    }*/
 
     @Override
     public void move(int dx, int dy) {
@@ -73,7 +80,7 @@ public class Player extends Actor {
         if (nextCell.getActor() instanceof Enemy) {
             return;
         }
-        if (!cell.getNeighbor(dx, dy).getTileName().equals("wall")&& nextCell.getActor() == null) {
+        if (!cell.getNeighbor(dx, dy).getTileName().equals("wall") && nextCell.getActor() == null) {
             cell.setActor(null);
             nextCell.setActor(this);
             cell = nextCell;

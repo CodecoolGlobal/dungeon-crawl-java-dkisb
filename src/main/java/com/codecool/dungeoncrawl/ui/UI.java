@@ -23,7 +23,6 @@ public class UI {
     private GameLogic logic;
     private Set<KeyHandler> keyHandlers;
 
-
     public UI(GameLogic logic, Set<KeyHandler> keyHandlers) {
         this.canvas = new Canvas(
                 logic.getMapWidth() * Tiles.TILE_WIDTH,
@@ -44,13 +43,13 @@ public class UI {
 
     private void onKeyPressed(KeyEvent keyEvent) {
         for (KeyHandler keyHandler : keyHandlers) {
-            keyHandler.perform(keyEvent, logic.getMap());
+            keyHandler.perform(keyEvent, logic.getMap()); //logic.getPlayer() instead
         }
+        logic.getMap().updateEnemies(); // logic.moveEnemies() instead
         refresh();
     }
 
     public void refresh() {
-        logic.getMap().updateEnemies();
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < logic.getMapWidth(); x++) {

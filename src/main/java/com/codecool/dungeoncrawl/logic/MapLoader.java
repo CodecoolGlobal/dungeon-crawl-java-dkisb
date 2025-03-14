@@ -51,10 +51,10 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             int result = random.nextInt(2);
                             if (result == 0) {
-                                Skeleton skeleton = new Skeleton(cell);
+                                Skeleton skeleton = new Skeleton(cell, random);
                                 map.addEntities(skeleton);
                             } else {
-                                Ghost ghost = new Ghost(cell);
+                                Ghost ghost = new Ghost(cell, random);
                                 map.addEntities(ghost);
                             }
                             break;

@@ -35,7 +35,7 @@ public class GameLogic {
         return map.getPlayer().getInventory();
     }
 
-    public GameMap getMap() {
+    /*public GameMap getMap() {
         return map;
-    }
+    }*/
 }
