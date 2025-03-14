@@ -2,13 +2,13 @@ package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
 
+import java.util.Random;
+
 public class Ghost extends Enemy {
-    //Cell cell;
     private static final int BASE_HEALTH = 10;
 
-    public Ghost(Cell cell) {
-        super(cell, BASE_HEALTH);
-        this.cell = cell;
+    public Ghost(Cell cell, Random random) {
+        super(cell, BASE_HEALTH, random);
     }
 
     @Override

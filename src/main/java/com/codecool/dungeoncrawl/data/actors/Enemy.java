@@ -6,7 +6,6 @@ import com.codecool.dungeoncrawl.data.GameMap;
 import java.util.Random;
 
 public class Enemy extends Actor {
-    //private GameMap gameMap;
     private Random random;
 
     public Enemy(Cell cell, int baseHealth, Random random) {
@@ -19,26 +18,19 @@ public class Enemy extends Actor {
         return "enemy";
     }
 
-    private boolean checkForPlayer(GameMap gameMap) { //you can get neighbour cells form current cell, you dont need a game map
-        int x = cell.getX();
-        int y = cell.getY();
-
-        return isPlayerAt(gameMap, x + 1, y) ||
-                isPlayerAt(gameMap, x - 1, y) ||
-                isPlayerAt(gameMap, x, y + 1) ||
-                isPlayerAt(gameMap, x, y - 1);
+    private boolean checkForPlayer() {
+        return  isPlayerAt(cell.getNeighbor(1, 0)) ||
+                isPlayerAt(cell.getNeighbor(-1,0)) ||
+                isPlayerAt(cell.getNeighbor(0,1)) ||
+                isPlayerAt(cell.getNeighbor(0, -1));
     }
 
-    private boolean isPlayerAt(GameMap gameMap, int x, int y) {
-        if (x >= 0 && x < gameMap.getWidth() && y >= 0 && y < gameMap.getHeight()) {
-            Cell targetCell = gameMap.getCell(x, y);
-            return targetCell.getActor() instanceof Player;
-        }
-        return false;
+    private boolean isPlayerAt( Cell neighbor) {
+        return neighbor != null && neighbor.getActor() instanceof Player;
     }
 
     public void update(GameMap gameMap) {
-        if (checkForPlayer(gameMap)) {
+        if (checkForPlayer()) {
             gameMap.getEntities().remove(this);
             cell.setActor(null);
         } else {
