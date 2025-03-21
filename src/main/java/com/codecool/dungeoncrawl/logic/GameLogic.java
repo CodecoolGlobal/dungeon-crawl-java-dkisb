@@ -41,16 +41,16 @@ public class GameLogic {
     }
 
     public void moveEnemies() {
-        List<Enemy> enemiesCopy = new ArrayList<>(map.getEntities());
+
         List<Enemy> deadEnemies = new ArrayList<>();
 
-        for (Enemy enemy : enemiesCopy) {
-            enemy.update(map);
+        for (Enemy enemy : map.getEntities()) {
+            enemy.update(map.getEntities());
             if(!map.getEntities().contains(enemy)){
                 deadEnemies.add(enemy);
             }
-            map.getEntities().removeAll(deadEnemies);
         }
+        map.getEntities().removeAll(deadEnemies);
 
     }
 }
