@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.data.actors;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.GameMap;
 
+import java.util.List;
 import java.util.Random;
 
 public class Enemy extends Actor {
@@ -29,9 +30,9 @@ public class Enemy extends Actor {
         return neighbor != null && neighbor.getActor() instanceof Player;
     }
 
-    public void update(GameMap gameMap) {
+    public void update(List<Enemy> enemies) {
         if (checkForPlayer()) {
-            gameMap.getEntities().remove(this);
+            enemies.remove(this);
             cell.setActor(null);
         } else {
             moveRandomly();
