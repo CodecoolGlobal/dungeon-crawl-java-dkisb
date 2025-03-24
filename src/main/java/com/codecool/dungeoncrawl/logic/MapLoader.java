@@ -20,8 +20,8 @@ import java.util.Scanner;
 
 public class MapLoader {
 
-    public static GameMap loadMap() {
-        InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
+    public static GameMap loadMap(String mapName) {
+        InputStream is = MapLoader.class.getResourceAsStream("/" + mapName);
         Scanner scanner = new Scanner(is);
         Random random = new Random();
         int width = scanner.nextInt();

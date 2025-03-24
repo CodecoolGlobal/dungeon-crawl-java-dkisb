@@ -8,12 +8,13 @@ import com.codecool.dungeoncrawl.data.items.Item;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class GameLogic {
     private GameMap map;
 
-    public GameLogic() {
-        this.map = MapLoader.loadMap();
+    public GameLogic(String mapName) {
+        this.map = MapLoader.loadMap(mapName);
     }
 
     public double getMapWidth() {
