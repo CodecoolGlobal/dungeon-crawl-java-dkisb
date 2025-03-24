@@ -30,10 +30,10 @@ public class Enemy extends Actor {
         return neighbor != null && neighbor.getActor() instanceof Player;
     }
 
-    public void update(List<Enemy> enemies) {
+    public void update() {
         if (checkForPlayer()) {
-            enemies.remove(this);
             cell.setActor(null);
+            cell = null;
         } else {
             moveRandomly();
         }
@@ -47,6 +47,10 @@ public class Enemy extends Actor {
             case 2 -> move( 0, -1);
             case 3 -> move( 0, 1);
         }
+    }
+
+    public boolean isDead() {
+        return cell == null;
     }
 
     @Override
