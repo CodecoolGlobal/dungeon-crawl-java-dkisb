@@ -35,7 +35,7 @@ public class Player extends Actor {
         Item item = cell.getItem();
         if (item != null) {
             inventory.add(item);
-            item.applyEffect(this); //TODO: Implement this abstract method
+            item.applyEffect(this);
             cell.setItem(null);
         }
     }
