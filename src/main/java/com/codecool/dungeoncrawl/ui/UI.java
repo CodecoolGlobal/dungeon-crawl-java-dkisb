@@ -43,9 +43,10 @@ public class UI {
 
     private void onKeyPressed(KeyEvent keyEvent) {
         for (KeyHandler keyHandler : keyHandlers) {
-            keyHandler.perform(keyEvent, logic.getPlayer()); //logic.getPlayer() instead
+            keyHandler.perform(keyEvent, logic.getPlayer());
         }
-        logic.moveEnemies(); // logic.moveEnemies() instead
+        logic.moveEnemies();
+        logic.checkForLevelProgression();
         refresh();
     }
 

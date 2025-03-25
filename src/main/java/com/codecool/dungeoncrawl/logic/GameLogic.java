@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.Enemy;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.items.Item;
+import com.codecool.dungeoncrawl.data.items.Key;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +13,11 @@ import java.util.Scanner;
 
 public class GameLogic {
     private GameMap map;
+    private LevelHandler levelHandler;
+
 
     public GameLogic(String mapName) {
+        this.levelHandler = new LevelHandler();
         this.map = MapLoader.loadMap(mapName);
     }
 
@@ -46,6 +50,16 @@ public class GameLogic {
             enemy.update();
         }
         map.getEntities().removeIf(Enemy:: isDead);
-
     }
+
+    public void checkForLevelProgression(){
+        Player player = getPlayer();
+        if(player.isAbleToProgress()){
+            if(levelHandler.hasNextLevel()){
+                levelHandler.nextLevel();
+                this.map = levelHandler.loadLevel();
+            }
+        }
+    }
+
 }

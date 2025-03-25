@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.data;
 
 import com.codecool.dungeoncrawl.data.actors.*;
 import com.codecool.dungeoncrawl.data.items.*;
+import com.codecool.dungeoncrawl.logic.LevelHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ public class GameMap {
     private int width;
     private int height;
     private Cell[][] cells;
+    private LevelHandler levelHandler;
 
     private Player player;
 
