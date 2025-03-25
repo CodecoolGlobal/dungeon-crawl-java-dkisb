@@ -1,8 +1,7 @@
 package com.codecool.dungeoncrawl.data;
 
-import com.codecool.dungeoncrawl.data.actors.*;
-import com.codecool.dungeoncrawl.data.items.*;
-import com.codecool.dungeoncrawl.logic.LevelHandler;
+import com.codecool.dungeoncrawl.data.actors.Enemy;
+import com.codecool.dungeoncrawl.data.actors.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,6 @@ public class GameMap {
     private int width;
     private int height;
     private Cell[][] cells;
-    private LevelHandler levelHandler;
 
     private Player player;
 
@@ -29,10 +27,10 @@ public class GameMap {
         }
     }
 
-
     public Player getPlayer() {
         return player;
     }
+
     public List<Enemy> getEntities() {
         return entities;
     }
@@ -40,9 +38,11 @@ public class GameMap {
     public int getWidth() {
         return width;
     }
+
     public int getHeight() {
         return height;
     }
+
     public Cell getCell(int x, int y) {
         if (x < 0 || x >= width || y < 0 || y >= height) {
             return null;
