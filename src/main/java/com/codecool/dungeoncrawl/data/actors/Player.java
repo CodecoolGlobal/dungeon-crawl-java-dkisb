@@ -27,6 +27,9 @@ public class Player extends Actor {
     public List<Item> getInventory() {
         return inventory;
     }
+    public void setInventory(List<Item> inventory) {
+        this.inventory = inventory;
+    }
 
     public void checkItemPickup(){
         Item item = cell.getItem();
@@ -65,5 +68,4 @@ public class Player extends Actor {
             checkItemPickup();
         }
     }
-
 }
