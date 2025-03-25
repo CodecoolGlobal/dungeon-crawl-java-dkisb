@@ -58,6 +58,7 @@ public class GameLogic {
             if(levelHandler.hasNextLevel()){
                 levelHandler.nextLevel();
                 this.map = levelHandler.loadLevel();
+
             }
         }
     }
