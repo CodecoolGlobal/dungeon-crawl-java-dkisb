@@ -20,7 +20,7 @@ import java.util.Scanner;
 
 public class MapLoader {
 
-    public static GameMap loadMap(String mapName) {
+    public static GameMap loadMap(String mapName, Player player) {
         InputStream is = MapLoader.class.getResourceAsStream("/" + mapName);
         Scanner scanner = new Scanner(is);
         Random random = new Random();
@@ -32,6 +32,8 @@ public class MapLoader {
 
 
         GameMap map = new GameMap(width, height, CellType.EMPTY);
+        Cell playerSpawn = null;
+
         for (int y = 0; y < height; y++) {
             String line = scanner.nextLine();
             for (int x = 0; x < width; x++) {
@@ -60,7 +62,7 @@ public class MapLoader {
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
-                            map.setPlayer(new Player(cell));
+                            playerSpawn = cell;
                             break;
                         case 'k':
                             cell.setType(CellType.FLOOR);
@@ -83,6 +85,12 @@ public class MapLoader {
                     }
                 }
             }
+        }
+        if(player != null) {
+            player.setCell(playerSpawn);
+            map.setPlayer(player);
+        } else {
+            map.setPlayer(new Player(playerSpawn));
         }
         return map;
 

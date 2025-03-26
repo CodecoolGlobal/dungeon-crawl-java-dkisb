@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.data.GameMap;
+import com.codecool.dungeoncrawl.data.actors.Player;
 
 public class LevelHandler {
     private static final String[] LEVELS = {"map1.txt", "map2.txt", "map3.txt", "map4.txt", "map5.txt", "map6.txt", "map7.txt"};
@@ -11,10 +12,10 @@ public class LevelHandler {
         return currentLevel < LEVELS.length - 1;
     }
 
-    public GameMap loadLevel() {
+    public GameMap loadLevel(Player existingPlayer) {
         if (hasNextLevel()) {
             currentLevel++;
         }
-        return MapLoader.loadMap(LEVELS[currentLevel]);
+        return MapLoader.loadMap(LEVELS[currentLevel], existingPlayer);
     }
 }

@@ -57,4 +57,5 @@ public class GameMap {
     public void addEntities(Enemy enemy) {
         entities.add(enemy);
     }
+
 }

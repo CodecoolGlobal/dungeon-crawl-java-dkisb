@@ -11,11 +11,12 @@ import java.util.List;
 public class GameLogic {
     private GameMap map;
     private final LevelHandler levelHandler;
-
+    private Player player;
 
     public GameLogic() {
         this.levelHandler = new LevelHandler();
-        this.map = levelHandler.loadLevel();
+        this.map = levelHandler.loadLevel(null);
+        this.player = getPlayer();
     }
 
     public double getMapWidth() {
@@ -55,7 +56,9 @@ public class GameLogic {
     public void checkForLevelProgression() {
         Player player = getPlayer();
         if (player.isAbleToProgress()) {
-            this.map = levelHandler.loadLevel();
+            String currentName = player.getTileName();
+            player.setTileName(currentName);
+            this.map = levelHandler.loadLevel(player);
         }
     }
 
