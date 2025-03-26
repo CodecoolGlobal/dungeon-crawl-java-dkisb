@@ -23,6 +23,9 @@ public class UI {
     private GameLogic logic;
     private Set<KeyHandler> keyHandlers;
 
+    private String previousHealthValue;
+    private String previousInventory;
+
     public UI(GameLogic logic, Set<KeyHandler> keyHandlers) {
         this.canvas = new Canvas(
                 logic.getMapWidth() * Tiles.TILE_WIDTH,
@@ -65,12 +68,21 @@ public class UI {
                 }
             }
         }
-        mainStage.setHealthLabelText(logic.getPlayerHealth());
+
+        String currentHealth = logic.getPlayerHealth();
+        if (!currentHealth.equals(previousHealthValue)) {
+            mainStage.setHealthLabelText(currentHealth);
+            previousHealthValue = currentHealth;
+        }
+
         if (!logic.getPlayerInventory().isEmpty()) {
             String inventoryText = logic.getPlayerInventory().stream()
                     .map(Item::getName)
                     .collect(Collectors.joining("\n"));
-            mainStage.setInventoryContentText(inventoryText.isEmpty() ? "Inventory is empty." : inventoryText);
+            if (!inventoryText.equals(previousInventory)) {
+                mainStage.setInventoryContentText(inventoryText.isEmpty() ? "Inventory is empty." : inventoryText);
+                previousInventory = inventoryText;
+            }
         } else {
             mainStage.setInventoryContentText("Inventory is empty.");
         }
