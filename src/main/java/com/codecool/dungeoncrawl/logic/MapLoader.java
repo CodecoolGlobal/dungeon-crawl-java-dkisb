@@ -17,12 +17,10 @@ import java.util.Scanner;
 
 public class MapLoader {
 
-    public static GameMap loadMap(String mapName, Player player) {
+    public static GameMap loadMap(String mapName, Player player, CombatHandler combatHandler, GameReset gameReset) {
         InputStream is = MapLoader.class.getResourceAsStream("/" + mapName);
         Scanner scanner = new Scanner(is);
         Random random = new Random();
-        LevelHandler levelHandler = new LevelHandler();
-        CombatHandler combatHandler = new CombatHandler(levelHandler);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
 
@@ -89,7 +87,7 @@ public class MapLoader {
             player.setCell(playerSpawn);
             map.setPlayer(player);
         } else {
-            map.setPlayer(new Player(playerSpawn, combatHandler));
+            map.setPlayer(new Player(playerSpawn, combatHandler, gameReset));
         }
         return map;
 

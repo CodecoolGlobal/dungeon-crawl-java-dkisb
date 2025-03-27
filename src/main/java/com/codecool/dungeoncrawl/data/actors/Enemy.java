@@ -11,8 +11,7 @@ import java.util.Random;
 public class Enemy extends Actor {
     private Random random;
     private int attackPower;
-    private final LevelHandler levelHandler = new LevelHandler();
-    private final CombatHandler combatHandler = new CombatHandler(levelHandler);
+    private final CombatHandler combatHandler = new CombatHandler();
 
     public Enemy(Cell cell, int baseHealth, Random random) {
         super(cell, baseHealth);
