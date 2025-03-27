@@ -19,7 +19,7 @@ public class Sword extends Item {
 
     @Override
     public void applyEffect(Player player) {
-        player.setHealth(player.getHealth() + ACTION_POINT);
+        player.setAttackPower(ACTION_POINT);
         player.setTileName("swordedPlayer");
     }
 }

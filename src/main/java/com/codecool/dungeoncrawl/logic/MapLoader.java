@@ -3,7 +3,6 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
-import com.codecool.dungeoncrawl.data.actors.Actor;
 import com.codecool.dungeoncrawl.data.actors.Ghost;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.actors.Skeleton;
@@ -13,15 +12,12 @@ import com.codecool.dungeoncrawl.data.items.Shield;
 import com.codecool.dungeoncrawl.data.items.Sword;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class MapLoader {
 
-    public static GameMap loadMap(String mapName, Player player) { //boolean 3. parameter?
-        System.out.println(mapName);
+    public static GameMap loadMap(String mapName, Player player, CombatHandler combatHandler, GameReset gameReset) {
         InputStream is = MapLoader.class.getResourceAsStream("/" + mapName);
         Scanner scanner = new Scanner(is);
         Random random = new Random();
@@ -96,11 +92,11 @@ public class MapLoader {
                 }
             }
         }
-        if(player != null) {
+        if (player != null) {
             player.setCell(playerSpawn);
             map.setPlayer(player);
         } else {
-            map.setPlayer(new Player(playerSpawn));
+            map.setPlayer(new Player(playerSpawn, combatHandler, gameReset));
         }
         return map;
     }

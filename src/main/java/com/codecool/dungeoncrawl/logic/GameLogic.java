@@ -16,13 +16,13 @@ import java.util.*;
 
 public class GameLogic {
     private GameMap map;
-    private final LevelHandler levelHandler;
+    private final LevelHandler levelHandler = new LevelHandler();
+    private final CombatHandler combatHandler = new CombatHandler();
+    private final GameReset gameReset = new GameReset(this);
     private Player player;
 
     public GameLogic() {
-        this.levelHandler = new LevelHandler();
-        this.map = levelHandler.loadLevel(null);
-        this.player = getPlayer();
+        this.map = levelHandler.loadNextLevel(null,combatHandler, gameReset);
     }
 
     public double getMapWidth() {
@@ -58,6 +58,7 @@ public class GameLogic {
 
     public void moveEnemies() {
         for (Enemy enemy : map.getEntities()) {
+            if(enemy.isDead()) continue;
             enemy.update();
         }
         map.getEntities().removeIf(Enemy::isDead);
@@ -68,7 +69,7 @@ public class GameLogic {
         if (player.isAbleToProgress()) {
             String currentName = player.getTileName();
             player.setTileName(currentName);
-            this.map = levelHandler.loadLevel(player);
+            this.map = levelHandler.loadNextLevel(player, combatHandler, gameReset);
         }
     }
 
@@ -270,4 +271,8 @@ public class GameLogic {
         return choice;
     }
 
+    public void resetGame() {
+        levelHandler.resetToFirstLevel();
+        this.map = levelHandler.loadNextLevel(null,combatHandler, gameReset);
+    }
 }

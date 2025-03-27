@@ -39,6 +39,19 @@ public abstract class Actor implements Drawable {
         this.cell = cell;
     }
 
+    public boolean isDead() {
+        return health <= 0;
+    }
+
+    public void handleDeath(){
+        if(isDead()){
+            if(cell != null){
+                cell.setActor(null);
+            }
+            cell = null;
+        }
+    }
+
     public int getX() {
         return cell.getX();
     }

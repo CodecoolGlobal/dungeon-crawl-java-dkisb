@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class Ghost extends Enemy {
     private static final int BASE_HEALTH = 10;
+    private static final int BASE_DAMAGE = 5;
 
     public Ghost(Cell cell, Random random) {
         super(cell, BASE_HEALTH, random);
@@ -14,6 +15,11 @@ public class Ghost extends Enemy {
     @Override
     public String getTileName() {
         return "ghost";
+    }
+
+    @Override
+    public int getAttackPower() {
+        return BASE_DAMAGE;
     }
 
     @Override
