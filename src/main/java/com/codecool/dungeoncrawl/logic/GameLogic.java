@@ -5,21 +5,24 @@ import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.Actor;
 import com.codecool.dungeoncrawl.data.actors.Enemy;
 import com.codecool.dungeoncrawl.data.actors.Player;
+import com.codecool.dungeoncrawl.data.actors.Skeleton;
 import com.codecool.dungeoncrawl.data.items.Item;
-import com.codecool.dungeoncrawl.data.items.Key;
 import com.codecool.dungeoncrawl.databaseaccess.DaoJdbc;
 
+import java.awt.print.Book;
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class GameLogic {
     private GameMap map;
+    private final LevelHandler levelHandler;
+    private Player player;
 
-    public GameLogic(String mapName) {
-        this.map = MapLoader.loadMap(mapName);
+    public GameLogic() {
+        this.levelHandler = new LevelHandler();
+        this.map = levelHandler.loadLevel(null);
+        this.player = getPlayer();
     }
 
     public double getMapWidth() {
@@ -36,22 +39,37 @@ public class GameLogic {
     public Cell getCell(int x, int y) {
         return map.getCell(x, y);
     }
+
     public Player getPlayer() {
         return map.getPlayer();
     }
+
     public String getPlayerHealth() {
         return Integer.toString(map.getPlayer().getHealth());
     }
+
     public List<Item> getPlayerInventory() {
         return map.getPlayer().getInventory();
+    }
+
+    public List<Item> getItems() {
+        return map.getItems();
     }
 
     public void moveEnemies() {
         for (Enemy enemy : map.getEntities()) {
             enemy.update();
         }
-        map.getEntities().removeIf(Enemy:: isDead);
+        map.getEntities().removeIf(Enemy::isDead);
+    }
 
+    public void checkForLevelProgression() {
+        Player player = getPlayer();
+        if (player.isAbleToProgress()) {
+            String currentName = player.getTileName();
+            player.setTileName(currentName);
+            this.map = levelHandler.loadLevel(player);
+        }
     }
 
     public int save() {
@@ -59,14 +77,13 @@ public class GameLogic {
         try(Connection conn = DaoJdbc.connect().getConnection()) {
             String sql = "INSERT INTO saves (date, level) VALUES (?, ?)";
             PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            LocalDateTime now = LocalDateTime.now();
-            java.sql.Date date = java.sql.Date.valueOf(now.toLocalDate());
-            //st.setString(1, now.toString());
-            st.setDate(1, date);
-            st.setInt(2, 1);
+            LocalDateTime now = LocalDateTime.now().withNano(0);;
+            java.sql.Timestamp timestamp = Timestamp.valueOf(now);
+            st.setTimestamp(1, timestamp);
+            st.setInt(2, levelHandler.getCurrentLevel());
             st.executeUpdate();
             ResultSet rs = st.getGeneratedKeys();
-            rs.next(); // Read next returned value - in this case the first one. See ResultSet docs for more explaination
+            rs.next();
             id = rs.getInt(1);
         } catch (SQLException throwables) {
             throw new RuntimeException("Error while adding new Save.", throwables);
@@ -83,11 +100,28 @@ public class GameLogic {
                 st.setInt(2, id);
                 st.executeUpdate();
                 ResultSet rs = st.getGeneratedKeys();
-                rs.next(); // Read next returned value - in this case the first one. See ResultSet docs for more explaination
-                //id = rs.getInt(1);
+                rs.next();
             }
         } catch (SQLException throwables) {
             throw new RuntimeException("Error while adding new Save.", throwables);
+        }
+    }
+
+    public void saveItems(int id) {
+        try(Connection conn = DaoJdbc.connect().getConnection()) {
+            for (Item item : getItems()) {
+                String sql = "INSERT INTO items (name, xcoord, ycoord, saves_id) VALUES (?, ?, ?, ?)";
+                PreparedStatement st = conn.prepareStatement(sql);
+                st.setString(1, item.getName());
+                st.setInt(2, item.getCell().getX());
+                st.setInt(3, item.getCell().getY());
+                st.setInt(4, id);
+                st.executeUpdate();
+                ResultSet rs = st.getGeneratedKeys();
+                rs.next();
+            }
+        } catch (SQLException throwables) {
+            throw new RuntimeException("Error while adding new Items.", throwables);
         }
     }
 
@@ -104,7 +138,6 @@ public class GameLogic {
                 st.executeUpdate();
                 ResultSet rs = st.getGeneratedKeys();
                 rs.next(); // Read next returned value - in this case the first one. See ResultSet docs for more explaination
-                //id = rs.getInt(1);
             }
         } catch (SQLException throwables) {
             throw new RuntimeException("Error while adding new Enemies.", throwables);
@@ -128,4 +161,113 @@ public class GameLogic {
             throw new RuntimeException("Error while adding new Player.", throwables);
         }
     }
+
+    public void displaySaves() {
+        try (Connection conn = DaoJdbc.connect().getConnection()) {
+            String sql = "SELECT id, date, level FROM saves";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+            String saves = "";
+            while (rs.next()) { // while result set pointer is positioned before or on last row read authors
+                saves += "ID: " + rs.getString(1) + ", Date: " + rs.getString(2) + ", Level: " + rs.getString(3) + "\n";
+            }
+            System.out.println(saves);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while reading all saves", e);
+        }
+    }
+/*
+    public List<Actor> getActors(int savesId) {
+        List<Actor> actors = new ArrayList<>();
+        try (Connection conn = DaoJdbc.connect().getConnection()) {
+            String sql = "SELECT name, xcoord, ycoord, health FROM saves WHERE saves_id = " + savesId;
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+
+            while (rs.next()) { // while result set pointer is positioned before or on last row read authors
+                String name = rs.getString(1);
+                int x = rs.getInt(2);
+                int y = rs.getInt(3);
+                int health = rs.getInt(4);
+                //int skeletonX = 1;
+                //int skeletonY = 1;
+                Cell actorCell = map.getCell(x, y);
+                if (name.equals("player")) {
+                    Player player = new Player(actorCell);
+                    player.setHealth(health);
+                } else if (name.equals("skeleton")) {
+                    Skeleton skeleton
+                }
+                Skeleton skeleton = new Skeleton(skeletonCell, random);
+                map.addEntities(skeleton);
+                
+
+                // THRID STEP - find author with id == authorId
+                Author author = authorDao.get(authorId);
+
+                // FOURTH STEP - create a new Book class instance and add it to result list.
+                Book book = new Book(author, title);
+                book.setId(id);
+                result.add(book);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while reading all saves", e);
+        }
+        return actors;
+    }
+
+ */
+ 
+
+    public void menu() {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+        boolean isRunning = true;
+        while (isRunning) {
+            System.out.println("If you want to start a new game, press 'n'");
+            System.out.println("If you want to continue a saved game, press 'l'");
+            String option = scanner.nextLine();
+            switch (option) {
+                case "n": isRunning = false; break;
+                case "l": displaySaves();
+                          int id = chooseId();
+                          //map = levelHandler.setLevel(2, getPlayer()); //boolean true? 3. parameter
+/*
+
+                          //load skeleton
+                          int skeletonX = 1;
+                          int skeletonY = 1;
+                          Cell skeletonCell = map.getCell(skeletonX, skeletonY);
+                          Skeleton skeleton = new Skeleton(skeletonCell, random);
+                          map.addEntities(skeleton);
+
+                            //map.setLoaded(true);
+
+ */
+                    System.out.println(levelHandler.getCurrentLevel());
+                          isRunning = false; break;
+                default: System.out.println("Invalid option!"); break;
+            }
+        }
+        scanner.close();
+    }
+
+    public int chooseId() {
+        Scanner scanner = new Scanner(System.in);
+        int choice = 0;
+        boolean isRunning = true;
+        while (isRunning) {
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+                isRunning = false;
+            } catch (InputMismatchException e) {
+                System.out.println("Not a number");
+                System.out.println("Please enter a valid ID");
+                scanner.nextLine();
+            }
+        }
+        scanner.close();
+        return choice;
+    }
+
 }

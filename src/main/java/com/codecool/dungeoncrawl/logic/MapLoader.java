@@ -20,7 +20,8 @@ import java.util.Scanner;
 
 public class MapLoader {
 
-    public static GameMap loadMap(String mapName) {
+    public static GameMap loadMap(String mapName, Player player) { //boolean 3. parameter?
+        System.out.println(mapName);
         InputStream is = MapLoader.class.getResourceAsStream("/" + mapName);
         Scanner scanner = new Scanner(is);
         Random random = new Random();
@@ -32,6 +33,8 @@ public class MapLoader {
 
 
         GameMap map = new GameMap(width, height, CellType.EMPTY);
+        Cell playerSpawn = null;
+
         for (int y = 0; y < height; y++) {
             String line = scanner.nextLine();
             for (int x = 0; x < width; x++) {
@@ -49,6 +52,7 @@ public class MapLoader {
                             break;
                         case 'e':
                             cell.setType(CellType.FLOOR);
+
                             int result = random.nextInt(2);
                             if (result == 0) {
                                 Skeleton skeleton = new Skeleton(cell, random);
@@ -60,30 +64,43 @@ public class MapLoader {
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
-                            map.setPlayer(new Player(cell));
+                            playerSpawn = cell;
                             break;
-                      
                         case 'k':
                             cell.setType(CellType.FLOOR);
-                            cell.setItem(new Key(cell));
+                            Key key = new Key(cell);
+                            cell.setItem(key);
+                            map.addItem(key);
                             break;
                         case 'y':
                             cell.setType(CellType.FLOOR);
-                            cell.setItem(new Potion(cell));
+                            Potion potion = new Potion(cell);
+                            cell.setItem(potion);
+                            map.addItem(potion);
                             break;
                         case 'x':
                             cell.setType(CellType.FLOOR);
-                            cell.setItem(new Shield(cell));
+                            Shield shield = new Shield(cell);
+                            cell.setItem(shield);
+                            map.addItem(shield);
                             break;
                         case 's':
                             cell.setType(CellType.FLOOR);
-                            cell.setItem(new Sword(cell));
+                            Sword sword = new Sword(cell);
+                            cell.setItem(sword);
+                            map.addItem(sword);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }
                 }
             }
+        }
+        if(player != null) {
+            player.setCell(playerSpawn);
+            map.setPlayer(player);
+        } else {
+            map.setPlayer(new Player(playerSpawn));
         }
         return map;
     }

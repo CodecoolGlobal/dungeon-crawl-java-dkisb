@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.ui.keyeventhandler.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.util.Scanner;
 import java.util.Set;
 
 public class Game extends Application {
@@ -18,11 +19,11 @@ public class Game extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        this.keyHandlers = Set.of(new Up(), new Down(), new Left(), new Right(), new Save());
-        this.logic = new GameLogic("map1.txt");
+        this.keyHandlers = Set.of(new Up(), new Down(), new Left(), new Right());
+        this.logic = new GameLogic();
+        logic.menu();
         this.ui = new UI(logic, keyHandlers);
         ui.setUpPain(primaryStage);
-
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
     }
