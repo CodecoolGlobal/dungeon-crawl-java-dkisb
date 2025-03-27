@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Skeleton extends Enemy {
     private static final int BASE_HEALTH = 15;
-    private static final int BASE_DAMAGE = 7;
+    private static final int BASE_DAMAGE = 5;
 
     public Skeleton(Cell cell, Random random) {
         super(cell, BASE_HEALTH, random);
