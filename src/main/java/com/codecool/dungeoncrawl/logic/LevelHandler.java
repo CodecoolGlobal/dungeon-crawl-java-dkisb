@@ -12,10 +12,19 @@ public class LevelHandler {
         return currentLevel < LEVELS.length - 1;
     }
 
-    public GameMap loadLevel(Player existingPlayer) {
+    public void resetToFirstLevel() {
+        currentLevel = -1;
+    }
+
+    public GameMap loadNextLevel(Player existingPlayer,  CombatHandler combatHandler, GameReset gameReset) {
         if (hasNextLevel()) {
             currentLevel++;
         }
-        return MapLoader.loadMap(LEVELS[currentLevel], existingPlayer);
+        return loadCurrentLevel(existingPlayer, combatHandler, gameReset);
+
+    }
+
+    public GameMap loadCurrentLevel(Player existingPlayer, CombatHandler combatHandler, GameReset gameReset) {
+        return MapLoader.loadMap(LEVELS[currentLevel], existingPlayer, combatHandler, gameReset);
     }
 }

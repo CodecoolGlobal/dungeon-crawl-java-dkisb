@@ -2,12 +2,16 @@ package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.GameMap;
+import com.codecool.dungeoncrawl.logic.CombatHandler;
+import com.codecool.dungeoncrawl.logic.LevelHandler;
 
 import java.util.List;
 import java.util.Random;
 
 public class Enemy extends Actor {
     private Random random;
+    private int attackPower;
+    private final CombatHandler combatHandler = new CombatHandler();
 
     public Enemy(Cell cell, int baseHealth, Random random) {
         super(cell, baseHealth);
@@ -30,14 +34,20 @@ public class Enemy extends Actor {
         return neighbor != null && neighbor.getActor() instanceof Player;
     }
 
-    public boolean isDead() {
-        return cell == null;
-    }
-
     public void update() {
+        if(cell == null) return;
         if (checkForPlayer()) {
-            cell.setActor(null);
-            cell = null;
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dy = -1; dy <= 1; dy++) {
+                    if (dx == 0 && dy == 0) continue;
+                    Cell neighbor = cell.getNeighbor(dx, dy);
+                    if (isPlayerAt(neighbor)) {
+                        Player player = (Player) neighbor.getActor();
+                        combatHandler.handleEnemyAttacksToPlayer(this, player);
+                        System.out.println("Combat triggered between enemy and player!");
+                    }
+                }
+            }
         } else {
             moveRandomly();
         }
@@ -53,6 +63,10 @@ public class Enemy extends Actor {
         }
     }
 
+    public int getAttackPower () {
+        return attackPower;
+    }
+
     @Override
     public void move(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
@@ -62,5 +76,10 @@ public class Enemy extends Actor {
             nextCell.setActor(this);
             cell = nextCell;
         }
+    }
+
+    @Override
+    public void handleDeath() {
+        super.handleDeath();
     }
 }
