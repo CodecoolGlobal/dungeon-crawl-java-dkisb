@@ -19,6 +19,7 @@ public class Player extends Actor {
         super(cell, BASE_HEALTH);
     }
 
+    @Override
     public String getTileName() {
         return name;
     }
