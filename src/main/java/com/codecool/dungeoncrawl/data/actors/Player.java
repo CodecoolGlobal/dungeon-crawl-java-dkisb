@@ -23,6 +23,7 @@ public class Player extends Actor {
         this.gameReset = gameReset;
     }
 
+    @Override
     public String getTileName() {
         return name;
     }
@@ -50,6 +51,7 @@ public class Player extends Actor {
             inventory.add(item);
             item.applyEffect(this);
             cell.setItem(null);
+            cell.getMap().getItems().remove(item);
         }
     }
 

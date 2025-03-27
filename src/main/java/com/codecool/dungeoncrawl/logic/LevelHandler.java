@@ -27,4 +27,15 @@ public class LevelHandler {
     public GameMap loadCurrentLevel(Player existingPlayer, CombatHandler combatHandler, GameReset gameReset) {
         return MapLoader.loadMap(LEVELS[currentLevel], existingPlayer, combatHandler, gameReset);
     }
+
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+/*
+    public GameMap setLevel(int level, Player existingPlayer, boolean ) {
+        currentLevel = level;
+        return MapLoader.loadMap(LEVELS[currentLevel], existingPlayer);
+    }
+
+ */
 }
