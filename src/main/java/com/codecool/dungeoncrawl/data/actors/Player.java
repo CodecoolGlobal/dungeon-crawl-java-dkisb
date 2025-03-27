@@ -71,7 +71,6 @@ public class Player extends Actor {
         Cell nextCell = cell.getNeighbor(dx, dy);
         if (nextCell.getActor() instanceof Enemy enemy) {
             combatHandler.handlePlayerAttacksToEnemy(this, enemy);
-            System.out.println("attack happened! between:" + this + enemy);
             return;
         }
         if (!cell.getNeighbor(dx, dy).getTileName().equals("wall") && nextCell.getActor() == null) {
