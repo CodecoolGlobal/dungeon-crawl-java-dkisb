@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.data.actors;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.items.Item;
 import com.codecool.dungeoncrawl.data.items.Key;
+import com.codecool.dungeoncrawl.logic.CombatHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +13,11 @@ public class Player extends Actor {
     private String name = "player";
     private static final int BASE_HEALTH = 20;
     private int ATTACK_POWER = 0;
+    private final CombatHandler combatHandler;
 
-
-    public Player(Cell cell) {
+    public Player(Cell cell, CombatHandler combatHandler) {
         super(cell, BASE_HEALTH);
+        this.combatHandler = combatHandler;
     }
 
     public String getTileName() {
@@ -34,7 +36,7 @@ public class Player extends Actor {
         this.ATTACK_POWER = attackPower;
     }
 
-    public int getAttackPower(){
+    public int getAttackPower() {
         return ATTACK_POWER;
     }
 
@@ -67,7 +69,9 @@ public class Player extends Actor {
     @Override
     public void move(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getActor() instanceof Enemy) {
+        if (nextCell.getActor() instanceof Enemy enemy) {
+            combatHandler.handlePlayerAttacksToEnemy(this, enemy);
+            System.out.println("attack happened! between:" + this + enemy);
             return;
         }
         if (!cell.getNeighbor(dx, dy).getTileName().equals("wall") && nextCell.getActor() == null) {

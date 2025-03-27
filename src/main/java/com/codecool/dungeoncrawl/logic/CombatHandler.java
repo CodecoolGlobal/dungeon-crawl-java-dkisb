@@ -10,24 +10,24 @@ public class CombatHandler {
         this.levelHandler = levelHandler;
     }
 
-    public void handleCombat(Player player, Enemy enemy) {
-        while(player.getHealth() <= 0 || enemy.getHealth() <= 0) {
-        enemy.setHealth(enemy.getHealth() - player.getAttackPower());
-
-        if(enemy.getHealth() <= 0){
+    public void handlePlayerAttacksToEnemy(Player player, Enemy enemy) {
+        int damageToEnemy = player.getAttackPower();
+        enemy.setHealth(enemy.getHealth() - damageToEnemy);
+        System.out.println("Enemy takes " + damageToEnemy + " damage. Remaining health: " + enemy.getHealth());
+        if (enemy.getHealth() <= 0) {
             enemy.handleDeath();
-            enemy.getCell().setActor(null);
-            return;
         }
+    }
 
-        player.setHealth(player.getHealth() - enemy.getAttackPower());
-
-        if(player.getHealth() <= 0){
+    public void handleEnemyAttacksToPlayer(Enemy enemy, Player player) {
+        int damageToPlayer = enemy.getAttackPower();
+        player.setHealth(player.getHealth() - damageToPlayer);
+        System.out.println("Player takes " + damageToPlayer + " damage. Remaining health: " + player.getHealth());
+        if (player.getHealth() <= 0) {
             player.handleDeath();
             resetGame(player);
-            return;
         }
-        }
+
     }
 
     private void resetGame(Player player) {

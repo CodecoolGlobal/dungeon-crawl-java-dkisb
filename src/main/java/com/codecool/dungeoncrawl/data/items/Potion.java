@@ -4,7 +4,7 @@ import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.actors.Player;
 
 public class Potion extends Item {
-    private static final int ACTION_POINT = 25;
+    private static final int ACTION_POINT = 20;
     public Potion(Cell cell) {
         super(cell, "potion");
     }

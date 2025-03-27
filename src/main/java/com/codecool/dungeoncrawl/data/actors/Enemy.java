@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.GameMap;
+import com.codecool.dungeoncrawl.logic.CombatHandler;
 
 import java.util.List;
 import java.util.Random;
@@ -9,6 +10,7 @@ import java.util.Random;
 public class Enemy extends Actor {
     private Random random;
     private int attackPower;
+    private CombatHandler combatHandler;
 
     public Enemy(Cell cell, int baseHealth, Random random) {
         super(cell, baseHealth);
@@ -32,9 +34,13 @@ public class Enemy extends Actor {
     }
 
     public void update() {
+        if(cell == null) return;
         if (checkForPlayer()) {
-            cell.setActor(null);
-            cell = null;
+            Actor actorInNeighbor = cell.getActor();
+            if (actorInNeighbor instanceof Player player){
+                combatHandler.handleEnemyAttacksToPlayer(this, player);
+            }
+            System.out.println("Combat triggered between enemy and player!");
         } else {
             moveRandomly();
         }
@@ -47,6 +53,14 @@ public class Enemy extends Actor {
             case 1 -> move( -1, 0);
             case 2 -> move( 0, -1);
             case 3 -> move( 0, 1);
+        }
+
+        if (checkForPlayer()) {
+            Actor actorInNeighbor = cell.getActor();
+            if (actorInNeighbor instanceof Player player) {
+                combatHandler.handleEnemyAttacksToPlayer(this, player);
+                System.out.println("Combat triggered after moving between enemy and player!");
+            }
         }
     }
 
