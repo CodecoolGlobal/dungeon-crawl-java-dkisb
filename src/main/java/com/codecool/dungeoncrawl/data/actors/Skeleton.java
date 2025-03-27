@@ -7,6 +7,7 @@ import java.util.Random;
 
 public class Skeleton extends Enemy {
     private static final int BASE_HEALTH = 15;
+    private static final int BASE_DAMAGE = 7;
 
     public Skeleton(Cell cell, Random random) {
         super(cell, BASE_HEALTH, random);
@@ -15,6 +16,11 @@ public class Skeleton extends Enemy {
     @Override
     public String getTileName() {
         return "skeleton";
+    }
+
+    @Override
+    public int getAttackPower() {
+        return BASE_DAMAGE;
     }
 
     @Override

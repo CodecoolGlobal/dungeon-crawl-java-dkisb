@@ -11,11 +11,13 @@ import java.util.List;
 public class GameLogic {
     private GameMap map;
     private final LevelHandler levelHandler;
+    private final CombatHandler combatHandler;
     private Player player;
 
     public GameLogic() {
         this.levelHandler = new LevelHandler();
         this.map = levelHandler.loadLevel(null);
+        this.combatHandler = new CombatHandler(levelHandler);
         this.player = getPlayer();
     }
 
@@ -60,6 +62,9 @@ public class GameLogic {
             player.setTileName(currentName);
             this.map = levelHandler.loadLevel(player);
         }
+    }
+    public void engageCombat(Player player, Enemy enemy) {
+        combatHandler.handleCombat(player, enemy);
     }
 
 }

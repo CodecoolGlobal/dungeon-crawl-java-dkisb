@@ -8,6 +8,7 @@ import java.util.Random;
 
 public class Enemy extends Actor {
     private Random random;
+    private int attackPower;
 
     public Enemy(Cell cell, int baseHealth, Random random) {
         super(cell, baseHealth);
@@ -30,10 +31,6 @@ public class Enemy extends Actor {
         return neighbor != null && neighbor.getActor() instanceof Player;
     }
 
-    public boolean isDead() {
-        return cell == null;
-    }
-
     public void update() {
         if (checkForPlayer()) {
             cell.setActor(null);
@@ -53,6 +50,10 @@ public class Enemy extends Actor {
         }
     }
 
+    public int getAttackPower () {
+        return attackPower;
+    }
+
     @Override
     public void move(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
@@ -62,5 +63,10 @@ public class Enemy extends Actor {
             nextCell.setActor(this);
             cell = nextCell;
         }
+    }
+
+    @Override
+    public void handleDeath() {
+        super.handleDeath();
     }
 }

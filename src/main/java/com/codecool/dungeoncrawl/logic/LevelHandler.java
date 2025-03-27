@@ -12,6 +12,10 @@ public class LevelHandler {
         return currentLevel < LEVELS.length - 1;
     }
 
+    public void resetToFirstLevel() {
+        currentLevel = -1;
+    }
+
     public GameMap loadLevel(Player existingPlayer) {
         if (hasNextLevel()) {
             currentLevel++;
