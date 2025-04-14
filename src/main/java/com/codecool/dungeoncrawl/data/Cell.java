@@ -17,11 +17,6 @@ public class Cell implements Drawable {
         this.y = y;
         this.type = type;
     }
-
-    public CellType getType() {
-        return type;
-    }
-
     public void setType(CellType type) {
         this.type = type;
     }
@@ -56,5 +51,9 @@ public class Cell implements Drawable {
 
     public int getY() {
         return y;
+    }
+
+    public GameMap getMap() {
+        return gameMap;
     }
 }
